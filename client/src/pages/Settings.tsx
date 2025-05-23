@@ -21,7 +21,7 @@ const Settings: React.FC = () => {
 
   // Appearance settings
   const [darkMode, setDarkMode] = useState(localStorage.getItem('theme') === 'dark');
-  const [fontSize, setFontSize] = useState(localStorage.getItem('fontSize') || 'medium') as FontSize;
+  const [fontSize, setFontSize] = useState<FontSize>((localStorage.getItem('fontSize') as FontSize) || 'medium');
 
   // Privacy settings
   const [visibleProfile, setVisibleProfile] = useState(true);

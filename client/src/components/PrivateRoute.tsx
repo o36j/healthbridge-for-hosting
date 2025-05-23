@@ -11,6 +11,7 @@
  * Used with React Router's nested routes to protect sections of the application.
  */
 
+import React from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth, UserRole } from '../contexts/AuthContext';
 import LoadingSpinner from './ui/LoadingSpinner';
@@ -34,7 +35,7 @@ interface PrivateRouteProps {
  * @param redirectPath - Where to redirect unauthorized users, defaults to '/login'
  * @returns The protected route content or a redirect
  */
-const PrivateRoute = ({ allowedRoles, redirectPath = '/login' }: PrivateRouteProps) => {
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ allowedRoles, redirectPath = '/login' }) => {
   const { user, loading, error } = useAuth();
   const location = useLocation();
 
@@ -60,8 +61,8 @@ const PrivateRoute = ({ allowedRoles, redirectPath = '/login' }: PrivateRoutePro
 
   // If roles are specified, check if user has required role
   if (allowedRoles && !allowedRoles.includes(user.role)) {
-    // Redirect to home page if user doesn't have required role
-    return <Navigate to="/" replace />;
+    // Redirect to unauthorized page
+    return <Navigate to="/unauthorized" replace />;
   }
 
   // If user is authenticated and has required role, render the protected route
