@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button, Form, Alert, ToggleButton, ButtonGroup } from 'react-bootstrap';
-import { FaCog, FaPalette, FaGlobe, FaUserShield, FaExclamationTriangle } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Card, Button, Form, Alert, ToggleButton, ButtonGroup, FormControl } from 'react-bootstrap';
+import { FaCog, FaPalette, FaGlobe, FaUserShield, FaExclamationTriangle, FaBell, FaUser, FaLock, FaFont } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-const Settings = () => {
+type FontSize = 'small' | 'medium' | 'large';
+
+const Settings: React.FC = () => {
   const { user } = useAuth();
   const location = useLocation();
   const [successMessage, setSuccessMessage] = useState('');
@@ -19,7 +21,7 @@ const Settings = () => {
 
   // Appearance settings
   const [darkMode, setDarkMode] = useState(localStorage.getItem('theme') === 'dark');
-  const [fontSize, setFontSize] = useState(localStorage.getItem('fontSize') || 'medium');
+  const [fontSize, setFontSize] = useState(localStorage.getItem('fontSize') || 'medium') as FontSize;
 
   // Privacy settings
   const [visibleProfile, setVisibleProfile] = useState(true);
@@ -40,24 +42,23 @@ const Settings = () => {
 
   // Apply font size when changed
   useEffect(() => {
-    document.documentElement.style.fontSize = getFontSizeValue(fontSize);
+    document.documentElement.style.fontSize = getFontSizeValue(fontSize) + 'px';
     localStorage.setItem('fontSize', fontSize);
   }, [fontSize]);
 
   // Apply theme function
   const applyTheme = (theme: 'light' | 'dark' | 'system') => {
-    document.documentElement.setAttribute('data-bs-theme', theme);
+    document.documentElement.setAttribute('data-theme', theme);
+    setDarkMode(theme === 'dark');
     localStorage.setItem('theme', theme);
   };
 
   // Get font size value
-  const getFontSizeValue = (size: 'small' | 'medium' | 'large') => {
+  const getFontSizeValue = (size: FontSize): number => {
     switch (size) {
-      case 'small': return '0.875rem';
-      case 'medium': return '1rem';
-      case 'large': return '1.125rem';
-      case 'x-large': return '1.25rem';
-      default: return '1rem';
+      case 'small': return 14;
+      case 'medium': return 16;
+      case 'large': return 18;
     }
   };
 
@@ -192,13 +193,12 @@ const Settings = () => {
                   <Form.Label className="fw-medium">Text Size</Form.Label>
                   <Form.Select 
                     value={fontSize}
-                    onChange={(e) => setFontSize(e.target.value)}
+                    onChange={(e) => setFontSize(e.target.value as FontSize)}
                     aria-label="Select text size"
                   >
                     <option value="small">Small</option>
                     <option value="medium">Medium (Default)</option>
                     <option value="large">Large</option>
-                    <option value="x-large">Extra Large</option>
                   </Form.Select>
                 </Form.Group>
               </Form>

@@ -3,8 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Button, Alert, Spinner } from 'react-bootstrap';
 import { FaVideo, FaMicrophone, FaMicrophoneSlash, FaVideoSlash, FaPhone, FaComment, FaUser } from 'react-icons/fa';
 import axios from 'axios';
-import { useAuth } from '../contexts/AuthContext';
-import { UserRole } from '../types/UserRole';
+import { useAuth, UserRole } from '../contexts/AuthContext';
 
 interface Appointment {
   _id: string;
