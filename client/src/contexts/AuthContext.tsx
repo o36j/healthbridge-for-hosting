@@ -14,12 +14,9 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 import createLogger from '../utils/logger';
+import { API_URL, SERVER_URL } from '../config';
 
 const logger = createLogger('Auth');
-
-// API configuration
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-const SERVER_URL = API_URL.replace('/api', '');
 
 // Configure axios defaults for cross-domain requests with credentials
 axios.defaults.withCredentials = true;
@@ -86,6 +83,35 @@ export interface User {
   profilePhoto?: string;
   phone?: string;
   address?: string;
+  department?: string;
+  specialization?: string;
+  professionalProfile?: {
+    bio?: string;
+    education?: string[] | string;
+    experience?: string | number;
+    availability?: string | {
+      monday?: string;
+      tuesday?: string;
+      wednesday?: string;
+      thursday?: string;
+      friday?: string;
+      saturday?: string;
+      sunday?: string;
+    };
+    consultationFee?: string;
+    acceptingNewPatients?: boolean;
+    telehealth?: boolean;
+  };
+  visibilitySettings?: {
+    phone: boolean;
+    email: boolean;
+    department: boolean;
+    specialization: boolean;
+    licenseNumber: boolean;
+    bio: boolean;
+    education: boolean;
+    experience: boolean;
+  };
 }
 
 /**

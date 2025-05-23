@@ -45,13 +45,13 @@ const Settings = () => {
   }, [fontSize]);
 
   // Apply theme function
-  const applyTheme = (theme) => {
+  const applyTheme = (theme: 'light' | 'dark' | 'system') => {
     document.documentElement.setAttribute('data-bs-theme', theme);
     localStorage.setItem('theme', theme);
   };
 
   // Get font size value
-  const getFontSizeValue = (size) => {
+  const getFontSizeValue = (size: 'small' | 'medium' | 'large') => {
     switch (size) {
       case 'small': return '0.875rem';
       case 'medium': return '1rem';

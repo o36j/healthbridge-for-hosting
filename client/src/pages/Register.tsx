@@ -21,9 +21,12 @@ const Register = () => {
   const { register } = useAuth();
   const navigate = useNavigate();
   
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
   
   const handleSubmit = async (e: React.FormEvent) => {
@@ -107,7 +110,7 @@ const Register = () => {
                           name="firstName"
                           placeholder="Enter your first name"
                           value={formData.firstName}
-                          onChange={handleChange}
+                          onChange={handleInputChange}
                           required
                           className="py-2"
                         />
@@ -121,7 +124,7 @@ const Register = () => {
                           name="lastName"
                           placeholder="Enter your last name"
                           value={formData.lastName}
-                          onChange={handleChange}
+                          onChange={handleInputChange}
                           required
                           className="py-2"
                         />
@@ -140,7 +143,7 @@ const Register = () => {
                         name="email"
                         placeholder="Enter your email"
                         value={formData.email}
-                        onChange={handleChange}
+                        onChange={handleInputChange}
                         required
                         className="py-2"
                       />
@@ -160,7 +163,7 @@ const Register = () => {
                             name="password"
                             placeholder="Create a password"
                             value={formData.password}
-                            onChange={handleChange}
+                            onChange={handleInputChange}
                             required
                             className="py-2"
                           />
@@ -178,7 +181,7 @@ const Register = () => {
                           name="confirmPassword"
                           placeholder="Confirm your password"
                           value={formData.confirmPassword}
-                          onChange={handleChange}
+                          onChange={handleInputChange}
                           required
                           className="py-2"
                         />
@@ -200,7 +203,7 @@ const Register = () => {
                           </span>
                         }
                         checked={formData.role === UserRole.PATIENT}
-                        onChange={handleChange}
+                        onChange={handleInputChange}
                         className="p-2 border rounded cursor-pointer bg-light"
                       />
                       <Form.Check
@@ -214,7 +217,7 @@ const Register = () => {
                           </span>
                         }
                         checked={formData.role === UserRole.DOCTOR}
-                        onChange={handleChange}
+                        onChange={handleInputChange}
                         className="p-2 border rounded cursor-pointer bg-light"
                       />
                       <Form.Check
@@ -228,7 +231,7 @@ const Register = () => {
                           </span>
                         }
                         checked={formData.role === UserRole.NURSE}
-                        onChange={handleChange}
+                        onChange={handleInputChange}
                         className="p-2 border rounded cursor-pointer bg-light"
                       />
                     </div>

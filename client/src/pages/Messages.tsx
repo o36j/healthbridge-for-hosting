@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Container, Row, Col, Card, Form, Button, ListGroup, Badge, Alert, Spinner } from 'react-bootstrap';
-import { FaUser, FaPaperPlane, FaPaperclip, FaTimes, FaDownload } from 'react-icons/fa';
+import { FaUser, FaPaperPlane, FaPaperclip, FaTimes, FaDownload, FaEnvelope } from 'react-icons/fa';
 import { useAuth, UserRole } from '../contexts/AuthContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';

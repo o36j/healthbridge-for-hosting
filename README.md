@@ -98,240 +98,115 @@ HealthBridge is a modern hospital appointment management system built with the M
 ## Project Structure
 
 ```
-├── client/                          # Frontend React application
-│   ├── public/                      # Static files and assets
-│   │   ├── src/                         # Source files
-│   │   │   ├── assets/                  # Images, icons, and other static assets
-│   │   │   ├── components/              # Reusable UI components
-│   │   │   │   ├── admin/               # Admin-specific components
-│   │   │   │   ├── appointments/        # Appointment management components
-│   │   │   │   ├── common/              # Shared components used across the app
-│   │   │   │   ├── doctors/             # Doctor-specific components
-│   │   │   │   ├── layouts/             # Layout components (headers, footers, etc.)
-│   │   │   │   ├── profile/             # User profile components
-│   │   │   │   ├── ui/                  # Basic UI components (buttons, cards, etc.)
-│   │   │   │   └── PrivateRoute.tsx     # Route wrapper for authentication
-│   │   │   │   ├── contexts/                # React context providers
-│   │   │   │   │   ├── AuthContext.tsx      # Authentication state management
-│   │   │   │   │   └── NotificationContext.tsx # Notifications state management
-│   │   │   │   ├── pages/                   # Page components
-│   │   │   │   │   ├── Landing.tsx          # Homepage/landing page
-│   │   │   │   │   ├── Login.tsx            # User login page
-│   │   │   │   │   ├── Register.tsx         # User registration page
-│   │   │   │   │   ├── Profile.tsx          # User profile page
-│   │   │   │   │   ├── Appointments.tsx     # Appointment management page
-│   │   │   │   │   ├── Doctors.tsx          # Doctors listing page
-│   │   │   │   │   ├── DoctorDetail.tsx     # Doctor detail page
-│   │   │   │   │   ├── PatientHistory.tsx   # Patient medical history page
-│   │   │   │   │   ├── Messages.tsx         # Messaging system page
-│   │   │   │   │   ├── Notifications.tsx    # Notifications page
-│   │   │   │   │   ├── Settings.tsx         # User settings page
-│   │   │   │   │   └── Admin/*.tsx          # Admin-specific pages
-│   │   │   │   ├── styles/                  # CSS and styling files
-│   │   │   │   │   └── index.css            # Global CSS styles
-│   │   │   │   ├── utils/                   # Utility functions
-│   │   │   │   │   ├── api.ts               # API request functions
-│   │   │   │   │   ├── auth.ts              # Authentication utility functions
-│   │   │   │   │   ├── date.ts              # Date formatting utilities
-│   │   │   │   │   └── validation.ts        # Form validation utilities
-│   │   │   │   ├── App.tsx                  # Main application component with routes
-│   │   │   │   ├── App.css                  # App-specific styles
-│   │   │   │   └── main.tsx                 # Application entry point
-│   │   │   ├── index.html                   # HTML template
-│   │   │   ├── vite.config.ts               # Vite configuration
-│   │   │   ├── tsconfig.json                # TypeScript configuration
-│   │   │   └── package.json                 # Frontend dependencies
-│   │   ├── index.html                   # HTML template
-│   │   ├── vite.config.ts               # Vite configuration
-│   │   ├── tsconfig.json                # TypeScript configuration
-│   │   └── package.json                 # Frontend dependencies
-│   ├── server/                          # Backend Node.js application
-│   │   ├── src/                         # Source files
-│   │   │   ├── config/                  # Configuration files
-│   │   │   │   ├── database.ts          # MongoDB connection setup
-│   │   │   │   ├── email.ts             # Email service configuration
-│   │   │   │   └── cloudinary.ts        # Cloudinary image storage config
-│   │   │   ├── controllers/             # Route controllers
-│   │   │   │   ├── auth.controller.ts   # Authentication controllers
-│   │   │   │   ├── user.controller.ts   # User management controllers
-│   │   │   │   ├── appointment.controller.ts # Appointment controllers
-│   │   │   │   ├── patientHistory.controller.ts # Patient history controllers
-│   │   │   │   ├── message.controller.ts # Messaging controllers
-│   │   │   │   └── chatbot.controller.ts # Chatbot integration controllers
-│   │   │   ├── middlewares/             # Express middlewares
-│   │   │   │   ├── auth.middleware.ts   # Authentication middleware
-│   │   │   │   ├── upload.middleware.ts # File upload middleware
-│   │   │   │   ├── validation.middleware.ts # Data validation middleware
-│   │   │   │   └── errorHandler.middleware.ts # Error handling middleware
-│   │   │   ├── models/                  # Mongoose data models
-│   │   │   │   ├── user.model.ts        # User data model
-│   │   │   │   ├── appointment.model.ts # Appointment data model
-│   │   │   │   ├── patientHistory.model.ts # Patient history data model
-│   │   │   │   ├── message.model.ts     # Message data model
-│   │   │   │   ├── notification.model.ts # Notification data model
-│   │   │   │   ├── userPreferences.model.ts # User preferences model
-│   │   │   │   └── auditLog.model.ts    # Audit logging model
-│   │   │   ├── routes/                  # API routes
-│   │   │   │   ├── auth.routes.ts       # Authentication routes
-│   │   │   │   ├── user.routes.ts       # User management routes
-│   │   │   │   ├── appointment.routes.ts # Appointment routes
-│   │   │   │   ├── patientHistory.routes.ts # Patient history routes
-│   │   │   │   ├── message.routes.ts    # Messaging routes
-│   │   │   │   ├── notification.routes.ts # Notification routes
-│   │   │   │   ├── admin.routes.ts      # Admin-specific routes
-│   │   │   │   └── chatbot.routes.ts    # Chatbot integration routes
-│   │   │   ├── types/                   # TypeScript type definitions
-│   │   │   │   ├── user.types.ts        # User-related type definitions
-│   │   │   │   ├── appointment.types.ts # Appointment-related type definitions
-│   │   │   │   └── request.types.ts     # Express request extensions
-│   │   │   ├── utils/                   # Utility functions
-│   │   │   │   ├── jwt.ts               # JWT token management utilities
-│   │   │   │   ├── email.ts             # Email sending utilities
-│   │   │   │   ├── logger.ts            # Logging utilities
-│   │   │   │   └── validation.ts        # Data validation utilities
-│   │   │   ├── validations/             # Data validation schemas
-│   │   │   │   ├── user.validation.ts   # User data validation schemas
-│   │   │   │   ├── appointment.validation.ts # Appointment validation schemas
-│   │   │   │   └── patientHistory.validation.ts # Patient history validation
-│   │   │   └── index.ts                 # Server entry point
-│   ├── uploads/                     # Uploaded files storage
-│   │   ├── profiles/                # User profile photos
-│   │   └── medical/                 # Medical record attachments
-│   ├── tsconfig.json                # TypeScript configuration
-│   └── package.json                 # Backend dependencies
-│
-└── docs/                            # Documentation files
-    ├── api.md                       # API documentation
-    ├── setup.md                     # Setup instructions
-    └── deployment.md                # Deployment guidelines
+healthbridge/
+├── client/             # Frontend React application
+├── server/             # Backend Node.js/Express application
+└── README.md
 ```
 
-## Getting Started
+## Environment Variables
 
-### Prerequisites
-- Node.js (v18.x or later)
-- MongoDB (v6.x or later)
-- npm or yarn
-
-### Installation
-
-1. Clone the repository
-```bash
-git clone https://github.com/o36j/healthbridge.git
-cd healthbridge
+### Frontend (client/.env.production)
+```
+VITE_API_URL=https://healthbridge-for-hosting.onrender.com/api
 ```
 
-2. Install backend dependencies
-```bash
-cd server
-npm install
+### Backend (server/.env)
 ```
-
-3. Configure environment variables
-```bash
-# Create a .env file in the server directory with the following variables:
 PORT=5000
-MONGODB_URI=mongodb://localhost:27017/healthbridge
+MONGODB_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
-JWT_REFRESH_SECRET=your_refresh_secret
-CLIENT_URL=http://localhost:5173
-NODE_ENV=development
+NODE_ENV=production
 ```
 
-4. Install frontend dependencies
-```bash
-cd ../client
-npm install
-```
+## Deployment
 
-5. Create frontend environment variables
-```bash
-# Create a .env file in the client directory with:
-VITE_API_URL=http://localhost:5000/api
-```
+### Backend (Render)
+1. Create a new Web Service on Render
+2. Connect your GitHub repository
+3. Set the following:
+   - Build Command: `cd server && npm install && npm run build`
+   - Start Command: `cd server && npm start`
+   - Environment Variables: Add all variables from server/.env
 
-6. Start the development servers
+### Frontend (Vercel)
+1. Create a new project on Vercel
+2. Connect your GitHub repository
+3. Set the following:
+   - Framework Preset: Vite
+   - Build Command: `cd client && npm install && npm run build`
+   - Output Directory: `client/dist`
+   - Environment Variables:
+     - VITE_API_URL: https://healthbridge-for-hosting.onrender.com/api
 
-Backend:
-```bash
-cd server
-npm run dev
-```
+## Development
 
-Frontend:
+### Frontend
 ```bash
 cd client
+npm install
 npm run dev
 ```
 
-7. Open the application in your browser
+### Backend
+```bash
+cd server
+npm install
+npm run dev
 ```
-http://localhost:5173
-```
 
-## API Documentation
+## Features
 
-### Authentication Endpoints
-- `POST /api/auth/register` - Register a new user
-- `POST /api/auth/login` - Login user
-- `POST /api/auth/refresh-token` - Refresh JWT token
-- `POST /api/auth/logout` - Logout user
-- `GET /api/auth/me` - Get current user
+- User Authentication (Patients, Doctors, Nurses, Admin)
+- Appointment Management
+- Medical Records
+- Prescription Management
+- Telehealth Integration
+- Real-time Messaging
+- File Uploads
+- Activity Logging
+- Role-based Access Control
 
-### User Endpoints
-- `GET /api/users/:id` - Get user by ID
-- `PUT /api/users/:id` - Update user profile
-- `POST /api/users/upload-photo/:id` - Upload profile photo
-- `PUT /api/users/change-password/:id` - Change password
-- `GET /api/users` - Get all users (admin only)
-- `PUT /api/users/role/:id` - Update user role (admin only)
-- `DELETE /api/users/:id` - Delete user (admin only)
+## Tech Stack
 
-### Appointment Endpoints
-- `POST /api/appointments` - Create new appointment
-- `GET /api/appointments/:id` - Get appointment by ID
-- `GET /api/appointments/user/:userId` - Get user appointments
-- `PATCH /api/appointments/status/:id` - Update appointment status
-- `PUT /api/appointments/:id` - Update appointment
-- `GET /api/appointments` - Get all appointments (admin/nurse only)
-- `DELETE /api/appointments/:id` - Delete appointment (admin only)
+### Frontend
+- React
+- TypeScript
+- Vite
+- React Bootstrap
+- React Router
+- Axios
+- React Icons
 
-### Patient History Endpoints
-- `POST /api/patient-history` - Create patient history record
-- `GET /api/patient-history/:id` - Get patient history by ID
-- `GET /api/patient-history/patient/:patientId` - Get patient's history
-- `PUT /api/patient-history/:id` - Update patient history
-- `GET /api/patient-history` - Get all patient history records (admin/staff only)
-- `DELETE /api/patient-history/:id` - Delete patient history (admin only)
+### Backend
+- Node.js
+- Express
+- MongoDB
+- Mongoose
+- JWT Authentication
+- Socket.IO
+- Multer
 
-### Message & Notification Endpoints
-- `POST /api/messages` - Send a new message
-- `GET /api/messages` - Get user's messages
-- `GET /api/notifications` - Get user's notifications
-- `PATCH /api/notifications/:id` - Mark notification as read
+## Security
 
-### Chatbot Endpoints
-- `POST /api/chatbot` - Send message to chatbot
+- JWT Authentication
+- CORS Configuration
+- Input Validation
+- XSS Protection
+- Rate Limiting
+- Secure File Uploads
 
 ## Contributing
 
-We welcome contributions to HealthBridge! Here's how you can help:
-
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-Please make sure to:
-- Follow the existing code style
-- Add tests for new features
-- Update documentation as needed
-- Follow the git commit message conventions
-
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgments
 

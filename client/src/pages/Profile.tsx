@@ -1,4 +1,4 @@
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect, FormEvent, ReactNode } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { Container, Row, Col, Card, Nav, Tab, Alert, Spinner, Form, Button } from 'react-bootstrap';
 import { 
@@ -403,7 +403,7 @@ const Profile = () => {
   };
 
   // Get icon and color for activity type
-  const getActivityAttributes = (action: string): { icon: JSX.Element; color: string; title: string } => {
+  const getActivityAttributes = (action: string): { icon: ReactNode; color: string; title: string } => {
     switch (action) {
       case 'login_success':
         return { 

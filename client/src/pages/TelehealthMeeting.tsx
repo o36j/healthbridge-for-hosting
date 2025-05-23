@@ -4,6 +4,7 @@ import { Container, Row, Col, Card, Button, Alert, Spinner } from 'react-bootstr
 import { FaVideo, FaMicrophone, FaMicrophoneSlash, FaVideoSlash, FaPhone, FaComment, FaUser } from 'react-icons/fa';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+import { UserRole } from '../types/UserRole';
 
 interface Appointment {
   _id: string;
@@ -201,7 +202,7 @@ const TelehealthMeeting: React.FC = () => {
   }
   
   // Determine if current user is the doctor or patient
-  const isDoctor = user?.role === 'DOCTOR';
+  const isDoctor = user?.role === UserRole.DOCTOR;
   const otherParticipant = isDoctor ? appointment.patient : appointment.doctor;
   
   return (

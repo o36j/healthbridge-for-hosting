@@ -1,13 +1,19 @@
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+import { Navbar, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { FaUser, FaSignOutAlt } from 'react-icons/fa';
 import { ReactNode, useState } from 'react';
-import { Link, useLocation, useNavigate, NavLink as RouterNavLink } from 'react-router-dom';
-import { useAuth, UserRole } from '../../contexts/AuthContext';
+import { Link as RouterLink, NavLink as RouterNavLink } from 'react-router-dom';
+import { useAuth as useAuthContext, UserRole } from '../../contexts/AuthContext';
 import {
   FaCalendarAlt,
   FaClipboardList,
   FaUserMd,
   FaUser,
   FaCog,
-  FaSignOutAlt,
+  FaSignOutAlt as FaSignOutAltIcon,
   FaBars,
   FaTimes,
   FaUserInjured,
@@ -32,7 +38,7 @@ import {
   FaPills,
   FaChartBar
 } from 'react-icons/fa';
-import { Container, Row, Col, Navbar, Nav, Button, Dropdown, Badge } from 'react-bootstrap';
+import { Container as BootstrapContainer, Row, Col, Navbar as BootstrapNavbar, Nav, Button, Dropdown, Badge } from 'react-bootstrap';
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -68,7 +74,7 @@ const SidebarNavLink: React.FC<SidebarNavLinkProps> = ({ to, icon, children, cla
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuthContext();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -152,8 +158,8 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     <div className="dashboard-layout d-flex flex-column min-vh-100 bg-light">
       {/* Header */}
       <header className="header bg-white shadow-sm">
-        <Navbar expand="lg">
-          <Container fluid>
+        <BootstrapNavbar expand="lg">
+          <BootstrapContainer fluid>
             {/* Mobile sidebar toggle */}
             <Button 
               variant="link" 
@@ -164,7 +170,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             </Button>
             
             {/* Logo */}
-            <Navbar.Brand 
+            <BootstrapNavbar.Brand 
               as={Link} 
               to="/" 
               className={user?.role === UserRole.ADMIN ? "ms-0 me-0 me-lg-2" : "me-auto me-lg-4"}
@@ -191,7 +197,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                   HealthBridge{user?.role === UserRole.ADMIN ? " Admin" : ""}
                 </span>
               </div>
-            </Navbar.Brand>
+            </BootstrapNavbar.Brand>
             
             {/* Page title - visible on all screen sizes */}
             <div className={`d-flex align-items-center ${user?.role === UserRole.ADMIN ? "ms-1" : ""}`}>
@@ -300,13 +306,13 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                   </Dropdown.Item>
                   <Dropdown.Divider />
                   <Dropdown.Item onClick={handleLogout}>
-                    <FaSignOutAlt className="me-2" /> Log Out
+                    <FaSignOutAltIcon className="me-2" /> Log Out
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>
-          </Container>
-        </Navbar>
+          </BootstrapContainer>
+        </BootstrapNavbar>
       </header>
       
       <div className="d-flex flex-grow-1">
@@ -426,7 +432,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                 className="w-100 d-flex align-items-center justify-content-center"
                 onClick={handleLogout}
               >
-                <FaSignOutAlt className="me-2" /> Logout
+                <FaSignOutAltIcon className="me-2" /> Logout
               </Button>
             </div>
           </div>
@@ -443,7 +449,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         
         {/* Main content */}
         <main className="flex-grow-1 py-4" style={{ marginLeft: sidebarOpen ? '260px' : '0' }}>
-          <Container fluid className="px-4">
+          <BootstrapContainer fluid className="px-4">
             <div className="d-none d-lg-block mb-4">
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb mb-0">
@@ -458,7 +464,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             </div>
 
             {children}
-          </Container>
+          </BootstrapContainer>
         </main>
       </div>
     </div>
